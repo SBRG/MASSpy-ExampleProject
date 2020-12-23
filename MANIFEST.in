@@ -1,0 +1,7 @@
+graft src
+
+include pyproject.toml
+include LICENSE
+inclide README.rst
+
+global-exclude *.py[cod] __pycache__
