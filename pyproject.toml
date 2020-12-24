@@ -10,3 +10,22 @@ requires = [
     "wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+################################################################################
+# Lint tools configuration                                                     #
+################################################################################
+[tool.black]
+line-length = 88
+python-version = [
+    "py36",
+    "py37"
+]
+
+
+[tool.isort]
+profile = "black"
+src_paths = [
+    "src/mass"
+]
+indent = 4
+lines_after_imports = 2
