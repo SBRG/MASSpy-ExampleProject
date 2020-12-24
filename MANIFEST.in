@@ -1,5 +1,7 @@
 graft src
 
+include *.yaml
+
 include pyproject.toml
 include LICENSE
 inclide README.rst
