@@ -77,7 +77,7 @@ envlist =
     clean,
     lint,
     safety,
-    py36-{cover,nocov},
+    py3{6,7}-{cover,nocov},
     report
 isolated_build = true
 skip_missing_interpreters = true
@@ -97,9 +97,9 @@ deps =
     cover: pytest-xdist
     cover: coverage[toml]
 depends =
-    py36-{cover}: clean
-    py36-{nocov}: py36-{cover}
-    report: py36-{cover}
+    py3{6,7}-{cover}: clean
+    py3{6,7}-{nocov}: py3{6,7}-{cover}
+    report: py3{6,7}-{cover}
 commands =
     cover: {posargs:pytest --cov=exampleproject --cov-report=term-missing --cov-append -vv}
     nocov: {posargs:pytest -vv --ignore=src}

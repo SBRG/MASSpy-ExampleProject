@@ -131,4 +131,11 @@ dmypy.json
 .pyre/
 
 # vscode
-.vscode
+.vscode/*
+*.code-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
