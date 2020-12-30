@@ -45,6 +45,26 @@ python_files = [
     "test_*.py"
 ]
 
+
+[tool.coverage.paths]
+source = [
+   "src",
+   "*/site-packages"
+]
+
+
+[tools.coverage.run]
+branch = true
+parallel = true
+source = [
+    "exampleproject",
+]
+
+
+[tools.coverage.report]
+show_missing = true
+precision = 2
+
 ################################################################################
 # Testing configuration                                                        #
 ################################################################################
@@ -57,7 +77,7 @@ envlist =
     clean,
     lint,
     safety,
-    py36-{nocov}
+    py36-{cover,nocov}
 isolated_build = true
 skip_missing_interpreters = true
 
@@ -68,10 +88,18 @@ setenv =
     PYTHONPATH={toxinidir}/tests
     PYTHONUNBUFFERED=yes
 usedevelop =
+    cover: true
     nocov: false
 deps =
     pytest
+    cover: pytest-cov
+    cover: pytest-xdist
+    cover: coverage[toml]
+depends =
+    py36-{cover}: clean
+    py36-{nocov}: py36-{cover}
 commands =
+    cover: {posargs:pytest --cov=exampleproject --cov-report=term-missing --cov-append -vv}
     nocov: {posargs:pytest -vv --ignore=src}
 
 
