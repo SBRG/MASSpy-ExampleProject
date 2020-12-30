@@ -52,8 +52,18 @@ python_files = [
 legacy_tox_ini = """
 [tox]
 minversion = 3.20
+envlist = lint
 isolated_build = true
 skip_missing_interpreters = true
 
+[testenv:lint]
+description = Lint code via pre-commit hooks, finishing with isort --> black --> flake8
+skip_install = true
+passenv = *
+deps =
+    pre-commit
+commands =
+    pre-commit install
+    pre-commit run --all-files
 
 """
