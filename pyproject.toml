@@ -14,6 +14,7 @@ build-backend = "setuptools.build_meta"
 ################################################################################
 # Lint tools configuration                                                     #
 ################################################################################
+
 [tool.black]
 line-length = 88
 python-version = [
@@ -29,3 +30,30 @@ src_paths = [
 ]
 indent = 4
 lines_after_imports = 2
+
+################################################################################
+# Testing tools configuration                                                  #
+################################################################################
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra --strict-markers"
+testpaths = [
+    "tests"
+]
+python_files = [
+    "test_*.py"
+]
+################################################################################
+# Testing configuration                                                        #
+################################################################################
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+minversion = 3.20
+isolated_build = true
+skip_missing_interpreters = true
+
+
+"""
