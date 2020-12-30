@@ -77,7 +77,8 @@ envlist =
     clean,
     lint,
     safety,
-    py36-{cover,nocov}
+    py36-{cover,nocov},
+    report
 isolated_build = true
 skip_missing_interpreters = true
 
@@ -98,6 +99,7 @@ deps =
 depends =
     py36-{cover}: clean
     py36-{nocov}: py36-{cover}
+    report: py36-{cover}
 commands =
     cover: {posargs:pytest --cov=exampleproject --cov-report=term-missing --cov-append -vv}
     nocov: {posargs:pytest -vv --ignore=src}
@@ -130,5 +132,14 @@ deps =
 commands =
     safety check --full-report
 
+
+[testenv:report]
+description = Report coverage over all test runs.
+skip_install = true
+deps =
+    coverage[toml]
+commands =
+    coverage report
+    coverage xml
 
 """
