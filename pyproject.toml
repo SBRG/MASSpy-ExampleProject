@@ -56,7 +56,7 @@ minversion = 3.20
 envlist =
     lint,
     safety,
-    py36
+    py36-{nocov}
 isolated_build = true
 skip_missing_interpreters = true
 
@@ -67,11 +67,11 @@ setenv =
     PYTHONPATH={toxinidir}/tests
     PYTHONUNBUFFERED=yes
 usedevelop =
-    false
+    nocov: false
 deps =
     pytest
 commands =
-    {posargs:pytest -vv --ignore=src}
+    nocov: {posargs:pytest -vv --ignore=src}
 
 
 [testenv:lint]
