@@ -25,7 +25,7 @@ python-version = [
 [tool.isort]
 profile = "black"
 src_paths = [
-    "src/mass"
+    "src/exampleproject"
 ]
 indent = 4
 lines_after_imports = 2
