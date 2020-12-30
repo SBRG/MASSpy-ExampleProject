@@ -54,6 +54,7 @@ legacy_tox_ini = """
 [tox]
 minversion = 3.20
 envlist =
+    clean,
     lint,
     safety,
     py36-{nocov}
@@ -72,6 +73,15 @@ deps =
     pytest
 commands =
     nocov: {posargs:pytest -vv --ignore=src}
+
+
+[testenv:clean]
+description = Clean previous coverage reports.
+skip_install = true
+deps =
+    coverage[toml]
+commands =
+    coverage erase
 
 
 [testenv:lint]
