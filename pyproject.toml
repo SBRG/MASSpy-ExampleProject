@@ -37,7 +37,7 @@ lines_after_imports = 2
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra --strict-markers"
+addopts = "-ra --strict-markers --tb=short"
 testpaths = [
     "tests"
 ]
@@ -48,20 +48,20 @@ python_files = [
 
 [tool.coverage.paths]
 source = [
-   "src",
-   "*/site-packages"
+    "src"
 ]
 
 
-[tools.coverage.run]
+[tool.coverage.run]
 branch = true
-parallel = true
 source = [
-    "exampleproject",
+    "src",
+    "tests"
 ]
+parallel = true
 
 
-[tools.coverage.report]
+[tool.coverage.report]
 show_missing = true
 precision = 2
 
@@ -77,10 +77,16 @@ envlist =
     clean,
     lint,
     safety,
-    py3{6,7}-{cover,nocov},
+    py3{6,7},
     report
 isolated_build = true
 skip_missing_interpreters = true
+
+
+[gh-actions]
+python =
+    3.6: py36
+    3.7: py37
 
 
 [testenv]
@@ -88,21 +94,17 @@ description = Run tests under {basepython}.
 setenv =
     PYTHONPATH={toxinidir}/tests
     PYTHONUNBUFFERED=yes
-usedevelop =
-    cover: true
-    nocov: false
+install_command = python -m pip install --upgrade --upgrade-strategy eager {opts} {packages}
+usedevelop = true
 deps =
     pytest
-    cover: pytest-cov
-    cover: pytest-xdist
-    cover: coverage[toml]
+    pytest-cov
+    coverage[toml]
 depends =
-    py3{6,7}-{cover}: clean
-    py3{6,7}-{nocov}: py3{6,7}-{cover}
-    report: py3{6,7}-{cover}
+    py3{6,7}: clean
+    report: py3{6,7}
 commands =
-    cover: {posargs:pytest --cov=exampleproject --cov-report=term-missing --cov-append -vv}
-    nocov: {posargs:pytest -vv --ignore=src}
+    pytest {posargs: --cov --cov-report=term-missing --cov-append -vv}
 
 
 [testenv:clean]
@@ -122,7 +124,8 @@ deps =
     pre-commit
 commands =
     pre-commit install
-    pre-commit run --all-files
+    pre-commit autoupdate
+    pre-commit run --show-diff-on-failure --all-files
 
 
 [testenv:safety]
@@ -140,6 +143,6 @@ deps =
     coverage[toml]
 commands =
     coverage report
-    coverage xml
+    coverage html
 
 """

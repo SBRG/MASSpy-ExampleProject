@@ -3,6 +3,7 @@ graft tests
 
 include *.yaml
 
+include .bumpversion.cfg
 include pyproject.toml
 include LICENSE
 include README.rst
