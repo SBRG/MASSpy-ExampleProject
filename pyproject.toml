@@ -91,9 +91,12 @@ python =
 
 [testenv]
 description = Run tests under {basepython}.
+passenv =
+    PY_COLORS
 setenv =
     PYTHONPATH={toxinidir}/tests
     PYTHONUNBUFFERED=yes
+    PY_COLORS={env:PY_COLORS:0}
 install_command = python -m pip install --upgrade --upgrade-strategy eager {opts} {packages}
 usedevelop = true
 deps =
@@ -120,6 +123,8 @@ commands =
 description = Lint code via pre-commit hooks, finishing with isort --> black --> flake8
 skip_install = true
 passenv = *
+setenv =
+    PRE_COMMIT_COLOR={env:PRE_COMMIT_COLOR:auto}
 deps =
     pre-commit
 commands =

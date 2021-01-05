@@ -3,16 +3,20 @@ name: CI
 on:
   push:
     branches:
+    - master
     - ci-cd-tests
     tags:
     - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
     branches:
+    - master
     - ci-cd-tests
   workflow_dispatch:
-
-env:
-  PY_COLORS: 1
+      inputs:
+        color:
+          descriptions: 'Use color'
+          required: true
+          default: 'true'
 
 jobs:
   lint:
@@ -32,6 +36,8 @@ jobs:
         name: Lint via pre-commit hooks
         id: pre-commit
         uses: pre-commit/action@v2.0.0
+        env:
+          PRE_COMMIT_COLOR: ${{ github.event.inputs.color == 'false' && 'never' || 'always' }}
 
   tests:
     needs: lint
@@ -71,6 +77,8 @@ jobs:
       -
         name: Run tests on Python ${{ matrix.python-version }} via tox
         id: run-tox
+        env:
+          PY_COLORS: ${{ github.event.inputs.color == 'false' && 0 || 1 }}
         run: |
           python -m tox
       -
