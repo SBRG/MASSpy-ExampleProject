@@ -54,11 +54,11 @@ source = [
 
 [tool.coverage.run]
 branch = true
+parallel = true
 source = [
     "src",
     "tests"
 ]
-parallel = true
 
 
 [tool.coverage.report]
@@ -76,6 +76,7 @@ minversion = 3.20
 envlist =
     clean,
     lint,
+    pypi-check,
     safety,
     py3{6,7},
     report
@@ -149,5 +150,17 @@ deps =
 commands =
     coverage report
     coverage html
+
+[testenv:pypi-check]
+description = Ensure README.rst renders on PyPI via twine.
+skip_install = true
+deps =
+    build
+    setuptools
+    twine
+    wheel
+commands =
+    python -m build -s -w -x -n -o {envtmpdir}/build {toxinidir}
+    twine check {envtmpdir}/build/*
 
 """
