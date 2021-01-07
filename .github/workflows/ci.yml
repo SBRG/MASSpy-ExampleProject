@@ -13,12 +13,8 @@ on:
     - ci-cd-tests
   workflow_dispatch:
       inputs:
-        color:
-          descriptions: 'Use color'
-          required: true
-          default: 'true'
         py-act:
-          descriptions: 'Python 3.X for actions'
+          description: 'Python 3.X for actions'
           required: false
           default: '3.7'
         pip_opts:
@@ -39,7 +35,7 @@ jobs:
         id: checkout
         uses: actions/checkout@v2
       -
-        name: Set up Python 3
+        name: Set up Python ${{ env.ACIONS_SETUP_PY3 }}
         id: setup
         uses: actions/setup-python@v2
         with:
@@ -48,8 +44,6 @@ jobs:
         name: Run pre-commit
         id: pre-commit
         uses: pre-commit/action@v2.0.0
-        env:
-          PRE_COMMIT_COLOR: ${{ github.event.inputs.color == 'false' && 'never' || 'always' }}
 
   tests:
     needs: lint
@@ -89,7 +83,7 @@ jobs:
         name: Run tests on Python ${{ matrix.py }} via tox
         id: run-tox
         env:
-          PY_COLORS: ${{ github.event.inputs.color == 'false' && 0 || 1 }}
+          PY_COLORS: 1
         run: |
           python -m tox
       -
