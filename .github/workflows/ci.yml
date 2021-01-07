@@ -27,7 +27,7 @@ on:
           default: '--upgrade --upgrade-strategy eager'
 env:
   ACIONS_SETUP_PY3: ${{ github.event.inputs.py-act || '3.7' }}
-  PIP_INSTALL_OPTS: ${{ github.event.inputs.pip_opts || --upgrade --upgrade-strategy eager }}
+  PIP_INSTALL_OPTS: ${{ github.event.inputs.pip_opts || '--upgrade --upgrade-strategy eager' }}
 
 jobs:
   lint:
