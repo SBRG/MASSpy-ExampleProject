@@ -1,5 +1,9 @@
 graft src
+
 graft tests
+
+graft docs
+prune docs/_build/
 
 include *.yaml
 

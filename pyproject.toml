@@ -79,6 +79,7 @@ envlist =
     pypi-check,
     safety,
     py3{6,7},
+    docs,
     report
 isolated_build = true
 skip_missing_interpreters = true
@@ -97,7 +98,7 @@ passenv =
 setenv =
     PYTHONPATH={toxinidir}/tests
     PYTHONUNBUFFERED=yes
-    PY_COLORS={env:PY_COLORS:0}
+    PY_COLORS={env:PY_COLORS:1}
 install_command = python -m pip install --upgrade --upgrade-strategy eager {opts} {packages}
 usedevelop = true
 deps =
@@ -151,8 +152,9 @@ commands =
     coverage report
     coverage html
 
-[testenv:pypi-check]
+[testenv:pypi-description]
 description = Ensure README.rst renders on PyPI via twine.
+basepython = python3
 skip_install = true
 deps =
     build
@@ -160,7 +162,16 @@ deps =
     twine
     wheel
 commands =
-    python -m build -s -w -x -n -o {envtmpdir}/build {toxinidir}
+    python -m build -s -w -x -n {toxinidir} -o {envtmpdir}/build
     twine check {envtmpdir}/build/*
+
+[testenv:docs]
+description = Use Sphinx to build and check the documentation.
+deps =
+    coverage
+extras = docs
+commands =
+	sphinx-build --color -W -b html -d {envtmpdir}/doctrees docs docs/_build/html
+    sphinx-build --color -W -b linkcheck -d {envtmpdir}/doctrees docs docs/_build/html
 
 """
