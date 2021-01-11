@@ -76,9 +76,9 @@ minversion = 3.20
 envlist =
     clean,
     lint,
-    pypi-check,
     safety,
     py3{6,7},
+    pypi-description,
     docs,
     report
 isolated_build = true
@@ -168,7 +168,6 @@ commands =
 [testenv:docs]
 description = Use Sphinx to build and check the documentation.
 deps =
-    coverage
 extras = docs
 commands =
 	sphinx-build --color -W -b html -d {envtmpdir}/doctrees docs docs/_build/html

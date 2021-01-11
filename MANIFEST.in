@@ -1,15 +1,14 @@
-graft src
-
-graft tests
+include \
+    *.yml \
+    *.yaml \
+    .bumpversion.cfg
 
 graft docs
-prune docs/_build/
+graft src
+graft tests
 
-include *.yaml
+global-exclude \
+    *.py[cod] \
+    __pycache__
 
-include .bumpversion.cfg
-include pyproject.toml
-include LICENSE
-include README.rst
-
-global-exclude *.py[cod] __pycache__
+prune docs/_build
