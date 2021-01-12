@@ -92,7 +92,7 @@ python =
 
 
 [testenv]
-description = Run tests under {basepython}.
+description = Base test environment configuration.
 passenv =
     PY_COLORS
 setenv =
@@ -100,16 +100,9 @@ setenv =
     PYTHONUNBUFFERED=yes
     PY_COLORS={env:PY_COLORS:1}
 install_command = python -m pip install --upgrade --upgrade-strategy eager {opts} {packages}
-usedevelop = true
-deps =
-    pytest
-    pytest-cov
-    coverage[toml]
 depends =
     py3{6,7}: clean
     report: py3{6,7}
-commands =
-    pytest {posargs: --cov --cov-report=term-missing --cov-append -vv}
 
 
 [testenv:clean]
@@ -143,14 +136,13 @@ commands =
     safety check --full-report
 
 
-[testenv:report]
-description = Report coverage over all test runs.
-skip_install = true
-deps =
-    coverage[toml]
+[testenv:py3{6,7}]
+description = Run tests under {basepython}.
+usedevelop = true
+extras = tests
 commands =
-    coverage report
-    coverage html
+    pytest {posargs: --cov --cov-report=term-missing --cov-append -vv}
+
 
 [testenv:pypi-description]
 description = Ensure README.rst renders on PyPI via twine.
@@ -167,10 +159,20 @@ commands =
 
 [testenv:docs]
 description = Use Sphinx to build and check the documentation.
-deps =
 extras = docs
 commands =
 	sphinx-build --color -W -b html -d {envtmpdir}/doctrees docs docs/_build/html
     sphinx-build --color -W -b linkcheck -d {envtmpdir}/doctrees docs docs/_build/html
+
+
+[testenv:report]
+description = Report coverage over all test runs.
+skip_install = true
+deps =
+    coverage[toml]
+commands =
+    coverage report
+    coverage html
+
 
 """
