@@ -4,13 +4,13 @@ on:
   push:
     branches:
     - master
-    - ci-cd-tests
+    - devel
     tags:
     - 'v[0-9]+.[0-9]+.[0-9]+'
   pull_request:
     branches:
     - master
-    - ci-cd-tests
+    - devel
   workflow_dispatch:
       inputs:
         py-act:
