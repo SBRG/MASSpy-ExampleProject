@@ -3,12 +3,19 @@ include \
     *.yaml \
     .bumpversion.cfg
 
+graft docker
 graft docs
 graft src
 graft tests
 
 global-exclude \
     *.py[cod] \
-    __pycache__
+    __pycache__ \
+    .DS_Store
 
+
+prune data
 prune docs/_build
+prune models
+prune notebooks
+prune references
